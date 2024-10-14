@@ -11,6 +11,9 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
+console.log('PG_HOST:', process.env.PG_HOST);
+console.log('PG_DATABASE:', process.env.PG_DATABASE);
+console.log('STRIPE_SECRET:', process.env.STRIPE_SECRET);
 
 app.use(cookieParser()); 
 
