@@ -1,11 +1,11 @@
 const postgres = require('postgres');
-
+require('dotenv').config();
 const sql = postgres({
-    host                 : 'localhost',            // Postgres ip address[s] or domain name[s]
-    port                 : 5432,          // Postgres server port[s]
-    database             : 'ecommerce',            // Name of database to connect to
-    username             : 'postgres',            // Username of database user
-    password             : 'pass',            // Password of database user
+    host                 : process.env.PG_HOST,            
+    port                 : process.env.PG_PORT,          
+    database             : process.env.PG_DATABASE,            
+    username             : process.env.PG_USERNAME,           
+    password             : process.env.PG_PASSWORD,           
    
   })
 
