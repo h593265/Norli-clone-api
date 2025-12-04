@@ -35,7 +35,12 @@ app.use("/products", productsRoute);
 app.use("/user", userRoute);
 app.use("/register", registerRoute);
 
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export for Vercel serverless
+module.exports = app;
