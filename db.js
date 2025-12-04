@@ -1,16 +1,7 @@
-const postgres = require('postgres');
+const { neon } = require('@neondatabase/serverless');
 require('dotenv').config();
-const sql = postgres({
-  ssl: { rejectUnauthorized: false },
-    host                 : process.env.PG_HOST,            
-    port                 : process.env.PG_PORT,          
-    database             : process.env.PG_DATABASE,            
-    username             : process.env.PG_USERNAME,           
-    password             : process.env.PG_PASSWORD,           
-   
-  })
 
- 
+// Use the connection string from Neon
+const sql = neon(process.env.DATABASE_URL);
 
-
-  module.exports = sql;
+module.exports = sql;
