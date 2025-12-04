@@ -11,9 +11,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
-console.log('PG_HOST:', process.env.PG_HOST);
-console.log('PG_DATABASE:', process.env.PG_DATABASE);
-console.log('STRIPE_SECRET:', process.env.STRIPE_SECRET);
+console.log('DATABASE_URL:', process.env.DATABASE_URL ? '✓ Connected' : '✗ Missing');
+console.log('STRIPE_SECRET:', process.env.STRIPE_SECRET ? '✓ Configured' : '✗ Missing');
 
 app.use(cookieParser()); 
 

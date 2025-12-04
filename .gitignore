@@ -23,3 +23,24 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# SQL files (already executed in database)
+*.sql
+
+# Setup scripts (one-time use only)
+scraper.js
+process-norli-api.js
+upload-images-to-blob.js
+generate-50-books.js
+fetch-books-with-covers.js
+
+# Generated data files
+*.json
+!package.json
+!package-lock.json
+
+# Image backups (already uploaded to Vercel Blob)
+/product-images/
+
+# Documentation
+IMAGE-SETUP.md
