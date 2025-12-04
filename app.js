@@ -27,9 +27,12 @@ const corsOptions ={
 app.use(cors(corsOptions));
 
 
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.json({ status: "API is running", timestamp: new Date().toISOString() });
+});
+
 app.use("/payment", paymentRoute);
-
-
 app.use("/login", loginRoute);
 app.use("/products", productsRoute);
 app.use("/user", userRoute);
