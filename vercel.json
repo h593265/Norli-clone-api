@@ -11,10 +11,5 @@
       "src": "/(.*)",
       "dest": "app.js"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "STRIPE_SECRET": "@stripe_secret",
-    "FRONTEND_URL": "@frontend_url"
-  }
+  ]
 }
