@@ -38,6 +38,7 @@ fetch-books-with-covers.js
 *.json
 !package.json
 !package-lock.json
+!vercel.json
 
 # Image backups (already uploaded to Vercel Blob)
 /product-images/
