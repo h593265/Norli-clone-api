@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions ={
-  origin: 'https://norli-clone.onrender.com',
+  origin: 'https://norli-clone.vercel.app',
   credentials:true,            
   optionSuccessStatus:200,
 }
