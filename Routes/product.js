@@ -157,4 +157,24 @@ router.get('/getfive', async (req, res) => {
   }
 });
 
+// Debug endpoint to check what categories exist
+router.get('/debug/categories', async (req, res) => {
+  try {
+    console.log('🔍 DEBUG: Fetching all categories');
+    const categories = await sql`
+      SELECT category, COUNT(*) as count 
+      FROM products 
+      GROUP BY category 
+      ORDER BY category
+    `;
+    res.status(200).json({
+      totalCategories: categories.length,
+      categories: categories
+    });
+  } catch (error) {
+    console.error('Error in debug endpoint:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
