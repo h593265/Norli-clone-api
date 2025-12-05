@@ -17,6 +17,7 @@ router.get('/getbycategory', async (req, res) => {
     }
 
     console.log(`🔍 Fetching category: ${category}, limit: ${limit}, page: ${page}`);
+    console.log(`🔑 LIKE pattern will be: "${category + '/%'}"`);
     console.log('💾 About to query database...');
 
     // Set a timeout for the database query
@@ -42,7 +43,12 @@ router.get('/getbycategory', async (req, res) => {
 
     const products = await Promise.race([queryPromise, timeoutPromise]);
 
-    console.log(`✓ Found ${products.length} products, sending response`);
+    console.log(`✓ Found ${products.length} products`);
+    if (products.length > 0) {
+      console.log(`  First product: ${products[0].title} (ID: ${products[0].id}, Category: ${products[0].category})`);
+    } else {
+      console.log('  ⚠️ ZERO PRODUCTS RETURNED - This might be a database sync issue');
+    }
     res.status(200).json(products);
   } catch (error) {
     console.error('❌ ERROR in /getbycategory:', error.message);
