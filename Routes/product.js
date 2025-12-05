@@ -12,7 +12,14 @@ router.get('/getbycategory', async (req, res) => {
       return res.status(400).json({ error: 'Category is required' });
     }
 
-    const products = await sql`
+    console.log(`Fetching category: ${category}, limit: ${limit}, page: ${page}`);
+
+    // Set a timeout for the database query
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database query timeout')), 25000)
+    );
+
+    const queryPromise = sql`
       SELECT * FROM (
         SELECT * 
         FROM products
@@ -22,10 +29,13 @@ router.get('/getbycategory', async (req, res) => {
       LIMIT ${parseInt(limit, 10)} OFFSET ${offset};
     `;
 
+    const products = await Promise.race([queryPromise, timeoutPromise]);
+
+    console.log(`Found ${products.length} products`);
     res.status(200).json(products);
   } catch (error) {
     console.error('Error fetching products:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Database error', message: error.message });
   }
 });
 

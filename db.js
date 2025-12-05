@@ -1,7 +1,10 @@
 const { neon } = require('@neondatabase/serverless');
 require('dotenv').config();
 
-// Use the connection string from Neon
-const sql = neon(process.env.DATABASE_URL);
+// Configure for serverless with fetch mode (faster cold starts)
+const sql = neon(process.env.DATABASE_URL, {
+  fetchConnectionCache: true,
+  fullResults: false
+});
 
 module.exports = sql;
