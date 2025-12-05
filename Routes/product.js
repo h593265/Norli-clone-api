@@ -4,19 +4,27 @@ const router = express.Router();
 
 
 router.get('/getbycategory', async (req, res) => {
+  console.log('🔵 REQUEST RECEIVED: /products/getbycategory');
+  console.log('📋 Query params:', req.query);
+  
   try {
     const { category, limit = 20, page = 1 } = req.query; 
     const offset = (page - 1) * limit; 
 
     if (!category) {
+      console.log('❌ No category provided');
       return res.status(400).json({ error: 'Category is required' });
     }
 
-    console.log(`Fetching category: ${category}, limit: ${limit}, page: ${page}`);
+    console.log(`🔍 Fetching category: ${category}, limit: ${limit}, page: ${page}`);
+    console.log('💾 About to query database...');
 
     // Set a timeout for the database query
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Database query timeout')), 25000)
+      setTimeout(() => {
+        console.log('⏱️ Database query TIMEOUT after 25 seconds');
+        reject(new Error('Database query timeout'));
+      }, 25000)
     );
 
     const queryPromise = sql`
@@ -27,14 +35,18 @@ router.get('/getbycategory', async (req, res) => {
         ORDER BY id
       ) sub
       LIMIT ${parseInt(limit, 10)} OFFSET ${offset};
-    `;
+    `.then(result => {
+      console.log('✅ Database query completed');
+      return result;
+    });
 
     const products = await Promise.race([queryPromise, timeoutPromise]);
 
-    console.log(`Found ${products.length} products`);
+    console.log(`✓ Found ${products.length} products, sending response`);
     res.status(200).json(products);
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error('❌ ERROR in /getbycategory:', error.message);
+    console.error('Stack:', error.stack);
     res.status(500).json({ error: 'Database error', message: error.message });
   }
 });
