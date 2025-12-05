@@ -26,7 +26,7 @@ if (isRenderPostgres) {
 } else {
   // Use Neon driver for Neon database
   sql = neon(process.env.DATABASE_URL, {
-    fetchConnectionCache: true,
+    fetchConnectionCache: false,  // Disable caching to get fresh results
     fullResults: false
   });
 }
