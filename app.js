@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions ={
-  origin: 'https://norli-clone.vercel.app',
+  origin: process.env.FRONTEND_URL || 'https://norli-clone.vercel.app',
   credentials:true,            
   optionSuccessStatus:200,
 }
@@ -38,12 +38,8 @@ app.use("/products", productsRoute);
 app.use("/user", userRoute);
 app.use("/register", registerRoute);
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
-}
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
-// Export for Vercel serverless
 module.exports = app;

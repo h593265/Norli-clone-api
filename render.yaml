@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: norli-api
+    env: node
+    buildCommand: npm install
+    startCommand: node app.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STRIPE_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: BLOB_READ_WRITE_TOKEN
+        sync: false
+      - key: NODE_ENV
+        value: production
