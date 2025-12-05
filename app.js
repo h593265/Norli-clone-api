@@ -32,6 +32,18 @@ app.get("/", (req, res) => {
   res.json({ status: "API is running", timestamp: new Date().toISOString() });
 });
 
+app.get('/test', (req, res) => {
+  res.json({ 
+    message: 'API is working!', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV 
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.send('OK');
+});
+
 app.use("/payment", paymentRoute);
 app.use("/login", loginRoute);
 app.use("/products", productsRoute);
