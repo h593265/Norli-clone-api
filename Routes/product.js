@@ -44,6 +44,7 @@ router.get('/getbycategory', async (req, res) => {
     const products = await Promise.race([queryPromise, timeoutPromise]);
 
     console.log(`✓ Found ${products.length} products`);
+    console.log(`🕐 Server deployment timestamp: 2025-12-06T${new Date().toISOString()}`);
     if (products.length > 0) {
       console.log(`  First product: ${products[0].title} (ID: ${products[0].id}, Category: ${products[0].category})`);
     } else {

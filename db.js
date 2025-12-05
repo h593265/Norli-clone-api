@@ -25,9 +25,14 @@ if (isRenderPostgres) {
   };
 } else {
   // Use Neon driver for Neon database
+  // COMPLETELY disable all caching - deployed at 2025-12-06
   sql = neon(process.env.DATABASE_URL, {
-    fetchConnectionCache: false,  // Disable caching to get fresh results
-    fullResults: false
+    fetchConnectionCache: false,
+    fullResults: false,
+    arrayMode: false,
+    fetchOptions: {
+      cache: 'no-store'
+    }
   });
 }
 
