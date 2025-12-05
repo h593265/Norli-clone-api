@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
+console.log('🚀 Server starting...');
 console.log('DATABASE_URL:', process.env.DATABASE_URL ? '✓ Connected' : '✗ Missing');
 console.log('STRIPE_SECRET:', process.env.STRIPE_SECRET ? '✓ Configured' : '✗ Missing');
 
