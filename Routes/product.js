@@ -173,12 +173,40 @@ router.get('/debug/categories', async (req, res) => {
       GROUP BY category 
       ORDER BY category
     `;
+    
+    const totalProducts = await sql`SELECT COUNT(*) as count FROM products`;
+    
     res.status(200).json({
+      totalProducts: totalProducts[0].count,
       totalCategories: categories.length,
       categories: categories
     });
   } catch (error) {
     console.error('Error in debug endpoint:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Debug endpoint to test specific category
+router.get('/debug/test-category', async (req, res) => {
+  try {
+    const { category = 'leker/lego' } = req.query;
+    console.log(`🧪 DEBUG: Testing category "${category}"`);
+    
+    const products = await sql`
+      SELECT id, title, category 
+      FROM products 
+      WHERE category = ${category} OR category LIKE ${category + '/%'}
+      LIMIT 10
+    `;
+    
+    res.status(200).json({
+      category: category,
+      found: products.length,
+      products: products
+    });
+  } catch (error) {
+    console.error('Error in test-category endpoint:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
